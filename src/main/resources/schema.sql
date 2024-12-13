@@ -1,0 +1,4 @@
+CREATE TABLE cliente (
+    id VARCHAR(50) PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);

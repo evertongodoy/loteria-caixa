@@ -1,10 +1,11 @@
-package com.everton.loterias.core.usecase.loterias.strategy;
+package com.everton.loterias.core.usecase.loterias.impl.strategy;
 
-import java.util.List;
+import com.everton.loterias.core.domain.LoteriaDomain;
 
 public interface LoteriaStrategy {
 
-    boolean seletorLoteria(String tipoLoteria);
-    void salvarMinhaLoteria(String tipoLoteria, List<Integer> numeros);
+    boolean seletorLoteria(final String tipoLoteria);
+    LoteriaDomain salvarAposta(final LoteriaDomain domain);
+    void atualizarBaseLoteria(final String tipoLoteria);
 
 }

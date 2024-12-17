@@ -14,8 +14,11 @@ spring:
       path: /h2-console  # Habilita o console web do H2
   jpa:
     hibernate:
-      ddl-auto: update  # Cria ou atualiza as tabelas automaticamente
+      ddl-auto: update  # Cria ou atualiza as tabelas automaticamente    none
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
-
+  flyway:
+    enabled: true
+    clean-disabled: true # true = Evita que o banco seja limpo acidentalmente
+    locations: classpath:db/migration

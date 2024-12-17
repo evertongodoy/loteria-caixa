@@ -15,5 +15,6 @@ public class SalvarApostaRequest {
 
     private TipoLoteria tipoLoteria;
     private Set<Integer> numerosAposta;
+    private boolean isAtivo;
 
 }

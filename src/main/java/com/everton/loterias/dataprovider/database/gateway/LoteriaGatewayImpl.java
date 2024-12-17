@@ -14,11 +14,9 @@ public class LoteriaGatewayImpl implements LoteriaGateway {
     private final LoteriaJpaRepository loteriaJpaRepository;
 
     @Override
-    public void salvarMinhaLoteria(final LoteriaDomain domain) {
-        System.out.println(domain);
+    public LoteriaDomain salvarMinhaLoteria(final LoteriaDomain domain) {
         var entity = LoteriaRepositoryMapper.INSTANCE.toEntity(domain);
-        loteriaJpaRepository.save()
-        System.out.println("Salvando loteria");
+        return LoteriaRepositoryMapper.INSTANCE.toDomain(loteriaJpaRepository.save(entity));
     }
 
 }

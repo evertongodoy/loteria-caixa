@@ -1,13 +1,8 @@
 package com.everton.loterias.entrypoint.api.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public enum TipoLoteria {
     LOTOFACIL("Lotofacil"),
     LOTOMANIA("Lotomania"),
@@ -23,6 +18,16 @@ public enum TipoLoteria {
     @Override
     public String toString() {
         return descricao;
+    }
+
+    // Metodo estático para recuperar o enum pelo texto/descrição
+    public static TipoLoteria fromDescricao(String descricao) {
+        for (TipoLoteria tipoLoteria : TipoLoteria.values()) {
+            if (tipoLoteria.getDescricao().equalsIgnoreCase(descricao)) {
+                return tipoLoteria;
+            }
+        }
+        throw new IllegalArgumentException("Nenhum Tipo de Loteria encontrado para a descrição: " + descricao);
     }
 
 }

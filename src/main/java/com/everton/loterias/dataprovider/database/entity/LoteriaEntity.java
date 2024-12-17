@@ -2,24 +2,30 @@ package com.everton.loterias.dataprovider.database.entity;
 
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "apostas")
 public class LoteriaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAposta;
+    private Long id;
+    @Column(nullable = false, unique = true, updatable = false)
+    private UUID uuid;
+    @Column(nullable = false)
     private String tipoJogo;
-    private List<Integer> numeros;
+    @Column(nullable = false)
+    private String numeros;
+    @Column(nullable = false)
+    private LocalDate inicio;
+    @Column(nullable = false)
+    private boolean ativo;
+
 }

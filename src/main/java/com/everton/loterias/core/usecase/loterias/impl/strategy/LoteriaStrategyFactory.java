@@ -1,4 +1,4 @@
-package com.everton.loterias.core.usecase.loterias.strategy;
+package com.everton.loterias.core.usecase.loterias.impl.strategy;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

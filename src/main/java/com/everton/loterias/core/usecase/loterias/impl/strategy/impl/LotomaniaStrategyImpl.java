@@ -1,8 +1,9 @@
-package com.everton.loterias.core.usecase.loterias.strategy.impl;
+package com.everton.loterias.core.usecase.loterias.impl.strategy.impl;
 
 import com.everton.loterias.core.domain.LoteriaDomain;
+import com.everton.loterias.core.gateway.client.LoteriaGatewayWeb;
 import com.everton.loterias.core.gateway.database.LoteriaGateway;
-import com.everton.loterias.core.usecase.loterias.strategy.LoteriaStrategy;
+import com.everton.loterias.core.usecase.loterias.impl.strategy.LoteriaStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Objects;
 public class LotomaniaStrategyImpl implements LoteriaStrategy {
 
     private final LoteriaGateway loteriaGateway;
+    private final LoteriaGatewayWeb loteriaGatewayWeb;
     private static final String LOTOMANIA = "Lotomania";
 
     @Override
@@ -22,13 +24,14 @@ public class LotomaniaStrategyImpl implements LoteriaStrategy {
     }
 
     @Override
-    public void salvarMinhaLoteria(String tipoLoteria, List<Integer> numeros) {
-        validarTamanhoLista(numeros);
-        var domain = LoteriaDomain.builder()
-                .numeros(numeros)
-                .build();
-        loteriaGateway.salvarMinhaLoteria(domain);
-        System.out.println("Lotofacil aqui " + numeros.toString());
+    public LoteriaDomain salvarAposta(final LoteriaDomain domain) {
+        validarTamanhoLista(domain.getNumeros());
+        return loteriaGateway.salvarMinhaLoteria(domain);
+    }
+
+    @Override
+    public void atualizarBaseLoteria(String tipoLoteria) {
+        loteriaGatewayWeb.recuperarUltimoSorteio(tipoLoteria);
     }
 
     private void validarTamanhoLista(List<Integer> numeros){

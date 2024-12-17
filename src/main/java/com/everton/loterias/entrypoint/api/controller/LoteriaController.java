@@ -2,14 +2,14 @@ package com.everton.loterias.entrypoint.api.controller;
 
 import com.everton.loterias.core.usecase.loterias.LoteriaUsecase;
 import com.everton.loterias.entrypoint.api.controller.request.SalvarApostaRequest;
+import com.everton.loterias.entrypoint.api.controller.response.SalvarApostaResponse;
+import com.everton.loterias.entrypoint.api.dto.TipoLoteria;
+import com.everton.loterias.entrypoint.api.mapper.LoteriaMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -22,10 +22,18 @@ public class LoteriaController {
     private final LoteriaUsecase loteriaUsecase;
 
     @PostMapping("/criar-aposta")
-    public ResponseEntity<String> criarAposta(final @RequestBody SalvarApostaRequest request){
-        System.out.println(request.getNumerosAposta());
-        System.out.println(request.getTipoLoteria());
-        loteriaUsecase.salvarMinhaLoteria(request.getTipoLoteria().getDescricao(), new ArrayList<>(request.getNumerosAposta()));
-        return ResponseEntity.ok().body("aaaaaa");
+    public ResponseEntity<SalvarApostaResponse> criarAposta(final @RequestBody SalvarApostaRequest request){
+        return ResponseEntity.ok().body(LoteriaMapper.INSTANCE.toResponse(
+                loteriaUsecase.salvarMinhaAposta(request.getTipoLoteria().getDescricao(),
+                        new ArrayList<>(request.getNumerosAposta()),
+                        request.isAtivo())
+        ));
     }
+
+    @PostMapping("/atualizar-base-sorteios/{loteria}")
+    public ResponseEntity<String> atualizarBaseSorteios(@PathVariable(name = "loteria") final TipoLoteria tipoLoteria){
+        loteriaUsecase.atualizarBaseLoteria(tipoLoteria.getDescricao());
+        return ResponseEntity.ok().body("aaaaaaaaaaa");
+    }
+
 }

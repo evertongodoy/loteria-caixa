@@ -1,7 +1,7 @@
 package com.everton.loterias.dataprovider.database.mapper;
 
-import com.everton.loterias.core.domain.LoteriaDomain;
-import com.everton.loterias.dataprovider.database.entity.LoteriaEntity;
+import com.everton.loterias.core.domain.ApostaDomain;
+import com.everton.loterias.dataprovider.database.entity.ApostaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -18,10 +18,10 @@ public interface LoteriaRepositoryMapper {
     LoteriaRepositoryMapper INSTANCE = Mappers.getMapper(LoteriaRepositoryMapper.class);
 
     @Mapping(source = "domain.numeros", target = "numeros", qualifiedByName = "listToString")
-    LoteriaEntity toEntity(LoteriaDomain domain);
+    ApostaEntity toEntity(ApostaDomain domain);
 
     @Mapping(source = "entity.numeros", target = "numeros", qualifiedByName = "stringToList")
-    LoteriaDomain toDomain(LoteriaEntity entity);
+    ApostaDomain toDomain(ApostaEntity entity);
 
     @Named("listToString")
     default String converterNumeroString(final List<Integer> numeros) {

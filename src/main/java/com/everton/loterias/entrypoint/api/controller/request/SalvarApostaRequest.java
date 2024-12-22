@@ -13,7 +13,7 @@ import java.util.Set;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SalvarApostaRequest {
 
-    private TipoLoteria tipoLoteria;
+    private String tipoLoteria;
     private Set<Integer> numerosAposta;
     private boolean isAtivo;
 

@@ -1,6 +1,5 @@
 package com.everton.loterias.core.domain;
 
-import jakarta.persistence.Entity;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -11,8 +10,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoteriaDomain {
+public class ApostaDomain {
 
+    private Long id;
     private UUID uuid;
     private String tipoJogo;
     private List<Integer> numeros;

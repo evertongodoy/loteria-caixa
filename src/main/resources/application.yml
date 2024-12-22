@@ -4,8 +4,10 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
   datasource:
-    url: jdbc:h2:mem:loteria-db
-    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:loteria-db
+#    driver-class-name: org.h2.Driver
+    urL: jdbc:mysql://localhost:3306/loteria-db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: sa
     password: password
   h2:
@@ -17,7 +19,10 @@ spring:
       ddl-auto: update  # Cria ou atualiza as tabelas automaticamente    none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+#        dialect: org.hibernate.dialect.H2Dialect    # No H2
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
   flyway:
     enabled: true
     clean-disabled: true # true = Evita que o banco seja limpo acidentalmente

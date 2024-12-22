@@ -1,11 +1,13 @@
 package com.everton.loterias.core.usecase.loterias.impl.strategy;
 
-import com.everton.loterias.core.domain.LoteriaDomain;
+import com.everton.loterias.core.domain.*;
 
 public interface LoteriaStrategy {
 
-    boolean seletorLoteria(final String tipoLoteria);
-    LoteriaDomain salvarAposta(final LoteriaDomain domain);
-    void atualizarBaseLoteria(final String tipoLoteria);
+    boolean seletorLoteria(final TipoLoteriaDomain tipoLoteriaDomain);
+    ApostaDomain salvarAposta(final ApostaDomain domain);
+    CaixaDomain recuperarSorteioWeb(final Integer numero);
+    CaixaDomain recuperarSorteioDataBase(final Integer numero);
+    AtualizacaoDataBaseDomain atualizarDataBaseCaixaSorteio(final Integer timerMillis, final Integer qtdeRegistros);
 
 }

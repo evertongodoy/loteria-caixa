@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "apostas")
-public class LoteriaEntity {
+public class ApostaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

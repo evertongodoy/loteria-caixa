@@ -11,9 +11,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AtualizacaoSorteioResponse {
+public class AtualizacaoDataBaseResponse {
 
-    private Integer totalElementos;
-    private List<SorteioResponse> sorteiosResponse;
+    private Integer totalSorteiosCaixa;
+    private List<Integer> sorteiosCaixa;
 
 }

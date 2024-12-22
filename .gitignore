@@ -22,3 +22,30 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+target/
+.mvn/
+/target/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Maven / Gradle
+build/
+
+# IDE-specific files
+.vscode/
+.classpath
+.project
+.settings/
+.gitattributes
+
+HELP.md
+mvnw
+mvnw.cmd

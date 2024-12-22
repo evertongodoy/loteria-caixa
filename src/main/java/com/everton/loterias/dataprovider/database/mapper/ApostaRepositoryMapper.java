@@ -13,9 +13,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface LoteriaRepositoryMapper {
+public interface ApostaRepositoryMapper {
 
-    LoteriaRepositoryMapper INSTANCE = Mappers.getMapper(LoteriaRepositoryMapper.class);
+    ApostaRepositoryMapper INSTANCE = Mappers.getMapper(ApostaRepositoryMapper.class);
 
     @Mapping(source = "domain.numeros", target = "numeros", qualifiedByName = "listToString")
     ApostaEntity toEntity(ApostaDomain domain);

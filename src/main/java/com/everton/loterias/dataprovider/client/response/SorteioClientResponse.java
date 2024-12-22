@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @JsonNaming(PropertyNamingStrategies.LowerCamelCaseStrategy.class)
-public class SorteioResponse {
+public class SorteioClientResponse {
 
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")

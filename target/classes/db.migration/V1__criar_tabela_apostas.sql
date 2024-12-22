@@ -1,8 +1,0 @@
-CREATE TABLE apostas (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    uuid VARCHAR(36) NOT NULL,
-    tipoJogo VARCHAR(25) NOT NULL,
-    numeros VARCHAR(255) NOT NULL,
-    inicio DATE NOT NULL,
-    ativo BOOLEAN NOT NULL
-);

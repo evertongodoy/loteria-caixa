@@ -1,10 +1,18 @@
 package com.everton.loterias.dataprovider.client.gateway;
 
-import com.everton.loterias.core.domain.Clientes;
+import com.everton.loterias.core.domain.CaixaDomain;
+import com.everton.loterias.core.domain.ResultadoDomain;
+import com.everton.loterias.core.domain.TipoLoteriaDomain;
 import com.everton.loterias.core.gateway.client.LoteriaGatewayWeb;
+//import com.everton.loterias.dataprovider.client.mapper.CaixaClientMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -13,14 +21,24 @@ public class LoteriaGatewayWebImpl implements LoteriaGatewayWeb {
     private final WebClient webClient;
 
     @Override
-    public void recuperarUltimoSorteio(String tipoLoteria) {
-        String url = "https://servicebus2.caixa.gov.br/portaldeloterias/api/lotomania/2711";
-        String ssssss = webClient.get()
+    public CaixaDomain recuperarSorteio(final TipoLoteriaDomain tipoLoteriaDomain,
+                                        final Integer numeroSorteio) {
+        var url = criarUrl(tipoLoteriaDomain.getDescricao().toLowerCase(), numeroSorteio);
+        var response = webClient.get()
                 .uri(url)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(ResultadoDomain.class)
                 .block();
-        System.out.println(ssssss);
+        return CaixaDomain.builder()
+                .resultados(Objects.isNull(response) ? Collections.emptyList() : List.of(response))
+                .build();
+    }
+
+    private String criarUrl(final String tipoLoteria, final Integer numeroSorteio){
+        return URL.concat("/")
+                .concat(tipoLoteria)
+                .concat("/")
+                .concat(Objects.toString(numeroSorteio, ""));
     }
 
 }

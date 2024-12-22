@@ -1,20 +1,17 @@
 package com.everton.loterias.dataprovider.database.repository;
 
-import com.everton.loterias.dataprovider.database.entity.SorteioEntity;
+import com.everton.loterias.dataprovider.database.entity.CaixaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-public interface SorteiosJpaRepository extends JpaRepository<SorteioEntity, Long> {
+public interface CaixaJpaRepository extends JpaRepository<CaixaEntity, Long> {
 
-    Optional<SorteioEntity> findByNumero(Integer numero);
+    List<CaixaEntity> findAllByTipoJogoOrderByNumeroAsc(final String tipoJogo);
 
-    @Query("SELECT a FROM SorteioEntity a WHERE a.tipoJogo = :nomeLoteria and a.numero = (SELECT MAX(m.numero) FROM SorteioEntity m where m.tipoJogo = :nomeLoteria)")
-    Optional<SorteioEntity> findLastByNumero(@Param("nomeLoteria") String tipoJogo);
-
-    Optional<SorteioEntity> findByNumeroAndTipoJogo(final Integer numero, final String tipoJogo);
+    List<CaixaEntity> findByNumeroAndTipoJogo(final Integer numero, final String tipoJogo);
 
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "sorteios")
-public class SorteioEntity {
+public class CaixaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

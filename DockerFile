@@ -1,28 +1,27 @@
-# Use uma imagem base com JDK 21
-FROM eclipse-temurin:21-jdk as builder
+# Etapa 1: Builder com Maven e Java 21
+FROM maven:3.9-eclipse-temurin-21 as builder
 
-# Instale o Maven manualmente (opcional, se não usar uma imagem com Maven)
-ARG MAVEN_VERSION=3.9.5
-RUN apt-get update && \
-    apt-get install -y curl tar && \
-    curl -fsSL https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -xz -C /usr/share && \
-    ln -s /usr/share/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/mvn
-
-# Configure o diretório de trabalho
+# Definir o diretório de trabalho no container
 WORKDIR /app
 
-# Copy only necessary files first
+# Copiar o pom.xml e baixar dependências antes do código (cache eficiente)
 COPY pom.xml ./
 RUN mvn dependency:go-offline -B
 
-# Copy the rest of the application source code
+# Copiar o restante do código
 COPY src ./src
 
-# Etapa final: execute a aplicação (opcional)
-FROM eclipse-temurin:21-jre
-WORKDIR /app
-COPY --from=build /app/target/loteria-caixa-0.0.1-SNAPSHOT.jar app.jar
-# Expose the application port
-EXPOSE 8080
+# Construir o projeto
+RUN mvn clean package -DskipTests
 
+# Etapa 2: Executar o JAR com uma imagem menor
+FROM eclipse-temurin:21-jre
+
+# Definir o diretório de trabalho no container
+WORKDIR /app
+
+# Copiar o JAR gerado para a imagem final
+COPY --from=builder /app/target/*.jar app.jar
+
+# Definir o comando de execução
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,13 +1,28 @@
-# Etapa de Build
-FROM maven:3.9.4-eclipse-temurin-21 as builder
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean install -DskipTests
+# Use uma imagem base com JDK 21
+FROM eclipse-temurin:21-jdk as builder
 
-# Etapa de Execução
-FROM amazoncorretto:21.0.4
+# Instale o Maven manualmente (opcional, se não usar uma imagem com Maven)
+ARG MAVEN_VERSION=3.9.5
+RUN apt-get update && \
+    apt-get install -y curl tar && \
+    curl -fsSL https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -xz -C /usr/share && \
+    ln -s /usr/share/apache-maven-${MAVEN_VERSION}/bin/mvn /usr/bin/mvn
+
+# Configure o diretório de trabalho
 WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
+
+# Copy only necessary files first
+COPY pom.xml ./
+RUN mvn dependency:go-offline -B
+
+# Copy the rest of the application source code
+COPY src ./src
+
+# Etapa final: execute a aplicação (opcional)
+FROM eclipse-temurin:21-jre
+WORKDIR /app
+COPY --from=build /app/target/loteria-caixa-0.0.1-SNAPSHOT.jar app.jar
+# Expose the application port
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

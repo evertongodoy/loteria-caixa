@@ -1,29 +1,32 @@
-RUN mvn clean install -DskipTests
-
-# Etapa 1: Builder com Maven e Java 21
+# Use a base image
 FROM maven:3.9-eclipse-temurin-21 as builder
 
-# Definir o diretório de trabalho no container
+# Set working directory
 WORKDIR /app
 
-# Copiar o pom.xml e baixar dependências antes do código (cache eficiente)
+# Print log messages during the build process
+RUN echo "Step 1: Preparing the build environment"
+
+# Copy the pom.xml and log
 COPY pom.xml ./
+RUN echo "Step 2: Downloading dependencies"
 RUN mvn dependency:go-offline -B
 
-# Copiar o restante do código
+# Copy source code and log
 COPY src ./src
-
-# Construir o projeto
+RUN echo "Step 3: Building the project"
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Executar o JAR com uma imagem menor
+# Final runtime image
 FROM eclipse-temurin:21-jre
-
-# Definir o diretório de trabalho no container
 WORKDIR /app
 
-# Copiar o JAR gerado para a imagem final
+# Copy the built JAR and log
 COPY --from=builder /app/target/*.jar app.jar
+RUN echo "Step 4: Preparing the runtime environment"
 
-# Definir o comando de execução
+# Print the final log message
+RUN echo "Build process completed successfully!"
+
+# Set entrypoint
 ENTRYPOINT ["java", "-jar", "app.jar"]

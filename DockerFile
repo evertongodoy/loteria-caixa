@@ -1,3 +1,5 @@
+# Etapa 1: Build
+
 RUN echo "Step 1: Definindo a JDK"
 # Use uma imagem base do JDK apropriada
 FROM openjdk:21-jdk-slim
@@ -8,11 +10,19 @@ WORKDIR /app
 
 # Copie os arquivos do projeto para o container
 RUN echo "Step 3: Copiando JAR loteria-caixa-0.0.1-SNAPSHOT.jar"
+COPY pom.xml ./
+COPY src ./src
 COPY target/loteria-caixa-0.0.1-SNAPSHOT.jar /app/loteria-caixa-0.0.1-SNAPSHOT.jar
+RUN mvn clean package
+
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/loteria-caixa-0.0.1-SNAPSHOT.jar ./loteria-caixa-0.0.1-SNAPSHOT.jar
 
 # Expõe a porta que sua aplicação vai usar
 RUN echo "Step 4: Exposicao da porta 8080"
 EXPOSE 8080
+
 
 # Comando para executar sua aplicação
 RUN echo "Step 5: Executando JAR"

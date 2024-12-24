@@ -44,10 +44,10 @@ public class LotomaniaStrategyImpl implements LoteriaStrategy {
     @Override
     public AtualizacaoDataBaseDomain atualizarDataBaseCaixaSorteio(final Integer timerMillis, final Integer qtdeRegistros) {
         var ultimoSorteioCaixaWeb = loteriaGatewayWeb.recuperarSorteio(TIPO_LOTERIA, null)
-                .getResultados().getFirst().getNumeroSorteio();
+                .getResultados().get(0).getNumeroSorteio();
         var resultadosCaixaDomain =
                 loteriaGateway.recuperarSorteio(TIPO_LOTERIA, null).getResultados();
-        var ultimoSorteioCaixaDb = resultadosCaixaDomain.isEmpty() ? 0 : resultadosCaixaDomain.getLast().getNumeroSorteio();
+        var ultimoSorteioCaixaDb = resultadosCaixaDomain.isEmpty() ? 0 : resultadosCaixaDomain.get(resultadosCaixaDomain.size() - 1).getNumeroSorteio();
         return this.salvarCaixaSorteios(ultimoSorteioCaixaWeb, ultimoSorteioCaixaDb, timerMillis, qtdeRegistros);
     }
 
@@ -69,7 +69,7 @@ public class LotomaniaStrategyImpl implements LoteriaStrategy {
             try {
                 Thread.sleep(timerMillis);
                 var sorteioCaixaWebDomain =
-                        loteriaGatewayWeb.recuperarSorteio(TIPO_LOTERIA, proximoSorteioBaseDados).getResultados().getFirst();
+                        loteriaGatewayWeb.recuperarSorteio(TIPO_LOTERIA, proximoSorteioBaseDados).getResultados().get(0);
                 regularizarAtributosWeb(sorteioCaixaWebDomain);
                 loteriaGateway.salvarSorteio(sorteioCaixaWebDomain);
                 sorteiosCaixaSalvo.add(proximoSorteioBaseDados);

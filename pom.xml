@@ -16,7 +16,7 @@
 	<description>Um modelo academico de arquitetura Hexagonal baseado em micro serviços reais</description>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 <!--		<maven.compiler.source>21</maven.compiler.source>-->
 <!--		<maven.compiler.target>21</maven.compiler.target>-->
 		<lombok.version>1.18.36</lombok.version>

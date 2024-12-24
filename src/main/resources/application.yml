@@ -8,7 +8,7 @@ spring:
 #    url: jdbc:h2:mem:loteria-db
 #    driver-class-name: org.h2.Driver
 # MySql - Railwayapp
-    urL: jdbc:mysql://${INTERNAL_HOST_MYSQL:localhost}:3306/loteria-db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    urL: jdbc:mysql://${INTERNAL_HOST_MYSQL:localhost}:${PORT_MYSQL:3306}/loteria-db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${SPRING_DATASOURCE_USERNAME:sa}
     password: ${SPRING_DATASOURCE_PASSWORD:password}

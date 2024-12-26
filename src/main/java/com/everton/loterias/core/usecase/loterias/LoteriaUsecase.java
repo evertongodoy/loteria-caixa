@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface LoteriaUsecase {
 
-    ApostaDomain salvarMinhaAposta(final String tipoLoteria, final List<Integer> numeros, final boolean isAtivo);
+    MinhaApostaDomain salvarMinhaAposta(final String tipoLoteria, final List<Integer> numeros, final boolean isAtivo);
 
     CaixaDomain recuperarSorteioWeb(final String tipoLoteria, final Integer numero);
 

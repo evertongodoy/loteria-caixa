@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("loterias")
@@ -22,11 +23,10 @@ public class LoteriaController {
     private final LoteriaUsecase loteriaUsecase;
 
     @PostMapping("/criar-aposta")
-    public ResponseEntity<SalvarApostaResponse> criarAposta(final @RequestBody SalvarApostaRequest request){
-        var apostaDomain = loteriaUsecase.salvarMinhaAposta(request.getTipoLoteria(),
-                new ArrayList<>(request.getNumerosAposta()),
-                request.isAtivo());
-        return ResponseEntity.ok().body(ApostaMapper.INSTANCE.toResponse(apostaDomain));
+    public ResponseEntity<MinhaApostaResponse> criarAposta(final @RequestBody SalvarApostaRequest request){
+        var salvarApostaDomain = loteriaUsecase.salvarMinhaAposta(
+                request.getTipoLoteria(), new ArrayList<>(request.getNumerosAposta()), request.isAtivo());
+        return ResponseEntity.ok().body(ApostaMapper.INSTANCE.toResponse(salvarApostaDomain));
     }
 
     @GetMapping("/get-resultados/web/{jogo}")
@@ -54,19 +54,15 @@ public class LoteriaController {
         );
     }
 
+    @GetMapping("/consultar-minhas-apostas/{jogo}")
+    public ResponseEntity<String> consultarMinhasApostas(
+            @PathVariable(value = "jogo") final String tipoJogo,
+            @RequestParam(value = "uuid", required = false) final UUID uuid
+    ){
 
+        return ResponseEntity.ok().body("AAAAAAA");
+    }
 
-
-
-
-
-//
-//    @PostMapping("/atualizar-base-sorteios/{loteria}")
-//    public ResponseEntity<AtualizacaoSorteioResponse> atualizarBaseSorteios(@PathVariable(name = "loteria") final TipoLoteria tipoLoteria) {
-//        AtualizacaoSorteioDomain atualizacaoSorteioDomain =
-//                loteriaUsecase.atualizarBaseLoteria(tipoLoteria.getDescricao());
-//        return ResponseEntity.ok().body(AtualizacaoSorteioMapper.INSTANCE.toResponse(atualizacaoSorteioDomain));
-//    }
 
 
 }

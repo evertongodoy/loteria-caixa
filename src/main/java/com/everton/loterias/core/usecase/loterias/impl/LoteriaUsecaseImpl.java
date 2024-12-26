@@ -16,9 +16,9 @@ public class LoteriaUsecaseImpl implements LoteriaUsecase {
 
     private final LoteriaStrategyFactory loteriaStrategyFactory;
 
-    public ApostaDomain salvarMinhaAposta(final String tipoLoteria,
-                                          final List<Integer> numeros,
-                                          final boolean isAtivo){
+    public MinhaApostaDomain salvarMinhaAposta(final String tipoLoteria,
+                                               final List<Integer> numeros,
+                                               final boolean isAtivo){
         return loteriaStrategyFactory.getStrategy(TipoLoteriaDomain.fromDescricao(tipoLoteria.toUpperCase()))
                 .salvarAposta(this.construirLoteriaDomain(tipoLoteria, numeros, isAtivo));
     }
@@ -42,8 +42,8 @@ public class LoteriaUsecaseImpl implements LoteriaUsecase {
     }
 
     private ApostaDomain construirLoteriaDomain(final String tipoLoteria,
-                                                final List<Integer> numeros,
-                                                final boolean isAtivo){
+                                                      final List<Integer> numeros,
+                                                      final boolean isAtivo){
         return ApostaDomain.builder()
                 .uuid(UUID.randomUUID())
                 .tipoJogo(tipoLoteria)

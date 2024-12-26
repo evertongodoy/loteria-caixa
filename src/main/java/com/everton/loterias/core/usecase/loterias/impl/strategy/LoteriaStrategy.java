@@ -5,7 +5,7 @@ import com.everton.loterias.core.domain.*;
 public interface LoteriaStrategy {
 
     boolean seletorLoteria(final TipoLoteriaDomain tipoLoteriaDomain);
-    ApostaDomain salvarAposta(final ApostaDomain domain);
+    MinhaApostaDomain salvarAposta(final ApostaDomain domain);
     CaixaDomain recuperarSorteioWeb(final Integer numero);
     CaixaDomain recuperarSorteioDataBase(final Integer numero);
     AtualizacaoDataBaseDomain atualizarDataBaseCaixaSorteio(final Integer timerMillis, final Integer qtdeRegistros);

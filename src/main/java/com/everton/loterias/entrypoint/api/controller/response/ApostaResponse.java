@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SalvarApostaResponse {
+public class ApostaResponse {
 
     private UUID uuid;
     private TipoLoteria tipoLoteria;

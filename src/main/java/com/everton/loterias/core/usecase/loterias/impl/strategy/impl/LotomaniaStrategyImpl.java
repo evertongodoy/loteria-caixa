@@ -26,7 +26,7 @@ public class LotomaniaStrategyImpl implements LoteriaStrategy {
     }
 
     @Override
-    public ApostaDomain salvarAposta(final ApostaDomain domain) {
+    public MinhaApostaDomain salvarAposta(final ApostaDomain domain) {
         validarTamanhoLista(domain.getNumeros());
         return loteriaGateway.salvarMinhaLoteria(domain);
     }

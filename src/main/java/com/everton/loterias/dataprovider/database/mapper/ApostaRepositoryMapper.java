@@ -7,9 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -36,7 +34,7 @@ public interface ApostaRepositoryMapper {
     @Named("stringToList")
     default List<Integer> converterNumeroList(final String nuwmeros) {
         if (Objects.isNull(nuwmeros) || nuwmeros.trim().isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
         return Arrays.stream(nuwmeros.split(","))
                 .map(Integer::parseInt) // Converter cada elemento para Integer

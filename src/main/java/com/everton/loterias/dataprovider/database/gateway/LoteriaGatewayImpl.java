@@ -2,7 +2,6 @@ package com.everton.loterias.dataprovider.database.gateway;
 
 import com.everton.loterias.core.domain.*;
 import com.everton.loterias.core.gateway.database.LoteriaGateway;
-import com.everton.loterias.dataprovider.database.entity.CaixaEntity;
 import com.everton.loterias.dataprovider.database.mapper.ApostaRepositoryMapper;
 import com.everton.loterias.dataprovider.database.mapper.CaixaRepositoryMapper;
 import com.everton.loterias.dataprovider.database.repository.ApostasJpaRepository;
@@ -21,9 +20,12 @@ public class LoteriaGatewayImpl implements LoteriaGateway {
     private final CaixaJpaRepository sorteiosJpaRepository;
 
     @Override
-    public ApostaDomain salvarMinhaLoteria(final ApostaDomain domain) {
+    public MinhaApostaDomain salvarMinhaLoteria(final ApostaDomain domain) {
         var entity = ApostaRepositoryMapper.INSTANCE.toEntity(domain);
-        return ApostaRepositoryMapper.INSTANCE.toDomain(apostasJpaRepository.save(entity));
+        var apostaDomain = ApostaRepositoryMapper.INSTANCE.toDomain(apostasJpaRepository.save(entity));
+        return MinhaApostaDomain.builder()
+                .apostasDomain(List.of(apostaDomain))
+                .build();
     }
 
     @Override

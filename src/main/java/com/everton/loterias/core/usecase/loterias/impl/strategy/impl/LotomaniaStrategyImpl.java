@@ -52,8 +52,45 @@ public class LotomaniaStrategyImpl implements LoteriaStrategy {
     }
 
     @Override
-    public MinhaApostaDomain recuperarMinnasApostasCaixa(final TipoLoteriaDomain tipoJogo, UUID uuid) {
-        return loteriaGateway.recuperarApostasCaixa(tipoJogo, uuid);
+    public MinhaApostaDomain recuperarMinnasApostasCaixa(UUID uuid) {
+        return loteriaGateway.recuperarApostasCaixa(TIPO_LOTERIA, uuid);
+    }
+
+    @Override
+    public CheckApostasDomain checarApostaVencedora(final UUID uuid, final List<Integer> apostaSimulada) {
+        ApostaDomain minhaAposta;
+        if(Objects.isNull(uuid)){
+            minhaAposta = ApostaDomain.builder().numeros(apostaSimulada).build();
+        } else {
+            var minhaApostaDomain = loteriaGateway.recuperarApostasCaixa(TIPO_LOTERIA, uuid);
+            minhaAposta = minhaApostaDomain.getApostasDomain().get(0);
+        }
+
+        var sorteios = loteriaGateway.recuperarSorteio(TIPO_LOTERIA, null).getResultados();
+
+        var apostasChecadas = new ArrayList<ApostaCheckedDomain>();
+
+        sorteios.forEach(resultado -> {
+            var numerosCoincidentes = new ArrayList<Integer>();
+            for(Integer meuNumero : minhaAposta.getNumeros()){
+                if(resultado.getListaDezenas().contains(meuNumero)){
+                    numerosCoincidentes.add(meuNumero);
+                }
+            }
+            if(numerosCoincidentes.size() >= 15){
+                var apostaChecada = ApostaCheckedDomain.builder()
+                        .numeroSorteio(resultado.getNumeroSorteio())
+                        .totalAcertos(numerosCoincidentes.size())
+                        .numerosCorretos(numerosCoincidentes)
+                        .tipoJogo(TIPO_LOTERIA)
+                        .build();
+                apostasChecadas.add(apostaChecada);
+            }
+        });
+        return CheckApostasDomain.builder()
+                .totalJogosComAcerto(apostasChecadas.size())
+                .apostasCheckadas(apostasChecadas)
+                .build();
     }
 
     private void validarTamanhoLista(List<Integer> numeros){

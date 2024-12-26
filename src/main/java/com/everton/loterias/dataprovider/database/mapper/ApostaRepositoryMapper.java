@@ -32,11 +32,11 @@ public interface ApostaRepositoryMapper {
     }
 
     @Named("stringToList")
-    default List<Integer> converterNumeroList(final String nuwmeros) {
-        if (Objects.isNull(nuwmeros) || nuwmeros.trim().isEmpty()) {
+    default List<Integer> converterNumeroList(final String numeros) {
+        if (Objects.isNull(numeros) || numeros.trim().isEmpty()) {
             return Collections.emptyList();
         }
-        return Arrays.stream(nuwmeros.split(","))
+        return Arrays.stream(numeros.split(","))
                 .map(Integer::parseInt) // Converter cada elemento para Integer
                 .collect(Collectors.toList());
     }

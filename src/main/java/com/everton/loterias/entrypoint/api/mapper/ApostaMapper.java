@@ -1,15 +1,18 @@
 package com.everton.loterias.entrypoint.api.mapper;
 
-import com.everton.loterias.core.domain.ApostaDomain;
-import com.everton.loterias.core.domain.MinhaApostaDomain;
+import com.everton.loterias.core.domain.*;
+import com.everton.loterias.entrypoint.api.controller.response.ApostaCheckedResponse;
 import com.everton.loterias.entrypoint.api.controller.response.ApostaResponse;
+import com.everton.loterias.entrypoint.api.controller.response.CheckApostasResponse;
 import com.everton.loterias.entrypoint.api.controller.response.MinhaApostaResponse;
 import com.everton.loterias.entrypoint.api.dto.TipoLoteria;
+import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,22 @@ public interface ApostaMapper {
     @Named("toTotalApostas")
     default Integer getTotalApostas(final List<ApostaDomain> apostasDomain){
         return apostasDomain.size();
+    }
+
+    default CheckApostasResponse toCheckApostaResponse(final CheckApostasDomain checkApostasDomain){
+        var apostasCheckedasResponse = checkApostasDomain.getApostasCheckadas().stream()
+                .map(apostaChecada -> ApostaCheckedResponse.builder()
+                        .numeroSorteio(apostaChecada.getNumeroSorteio())
+                        .totalAcertos(apostaChecada.getNumerosCorretos().size())
+                        .numerosCorretos(apostaChecada.getNumerosCorretos())
+                        .tipoJogo(apostaChecada.getTipoJogo().getDescricao())
+                        .build())
+                .sorted(Comparator.comparingInt(ApostaCheckedResponse::getTotalAcertos).reversed())
+                .toList();
+        return CheckApostasResponse.builder()
+                .totalJogosComAcerto(apostasCheckedasResponse.size())
+                .apostasCheckadas(apostasCheckedasResponse)
+                .build();
     }
 
 }

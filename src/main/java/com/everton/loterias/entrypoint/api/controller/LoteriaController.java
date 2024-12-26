@@ -1,6 +1,5 @@
 package com.everton.loterias.entrypoint.api.controller;
 
-import com.everton.loterias.core.domain.MinhaApostaDomain;
 import com.everton.loterias.core.usecase.loterias.LoteriaUsecase;
 import com.everton.loterias.entrypoint.api.controller.request.SalvarApostaRequest;
 import com.everton.loterias.entrypoint.api.controller.response.*;
@@ -13,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("loterias")
@@ -64,6 +65,27 @@ public class LoteriaController {
         return ResponseEntity.ok().body(ApostaMapper.INSTANCE.toResponse(minhasApostaDomain));
     }
 
+    @GetMapping("/check-apostas/jogo/{jogo}/minha-aposta/{uuid}")
+    public ResponseEntity<CheckApostasResponse> compararMinhaApostaComSorteio(@PathVariable(value = "jogo") final String tipoJogo,
+                                                                              @PathVariable(value = "uuid") final UUID uuid){
+        var chackApostasDomain = loteriaUsecase.validarAposta(tipoJogo, uuid, null);
+        return ResponseEntity.ok().body(
+                ApostaMapper.INSTANCE.toCheckApostaResponse(chackApostasDomain)
+        );
+    }
+
+    @GetMapping("/check-apostas-simulada/jogo/{jogo}/simulacao/{simulacao}")
+    public ResponseEntity<CheckApostasResponse> compararApostaSimuladaComSorteio(@PathVariable(value = "jogo") final String tipoJogo,
+                                                                                 @PathVariable(value = "simulacao") final String numeros){
+        var numerosSimulados = Arrays.stream(numeros.split("_"))
+                .map(Integer::parseInt) // Converter cada elemento para Integer
+                .distinct() // garantir que a lista final não contenha duplicatas
+                .toList();
+        var chackApostasDomain = loteriaUsecase.validarAposta(tipoJogo, null, numerosSimulados);
+        return ResponseEntity.ok().body(
+                ApostaMapper.INSTANCE.toCheckApostaResponse(chackApostasDomain)
+        );
+    }
 
 
 }

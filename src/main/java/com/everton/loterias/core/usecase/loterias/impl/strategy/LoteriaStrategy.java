@@ -2,6 +2,8 @@ package com.everton.loterias.core.usecase.loterias.impl.strategy;
 
 import com.everton.loterias.core.domain.*;
 
+import java.util.UUID;
+
 public interface LoteriaStrategy {
 
     boolean seletorLoteria(final TipoLoteriaDomain tipoLoteriaDomain);
@@ -9,5 +11,6 @@ public interface LoteriaStrategy {
     CaixaDomain recuperarSorteioWeb(final Integer numero);
     CaixaDomain recuperarSorteioDataBase(final Integer numero);
     AtualizacaoDataBaseDomain atualizarDataBaseCaixaSorteio(final Integer timerMillis, final Integer qtdeRegistros);
+    MinhaApostaDomain recuperarMinnasApostasCaixa(final TipoLoteriaDomain tipoJogo, final UUID uuid);
 
 }

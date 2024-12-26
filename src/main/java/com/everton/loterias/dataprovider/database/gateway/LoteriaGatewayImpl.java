@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +47,16 @@ public class LoteriaGatewayImpl implements LoteriaGateway {
         return CaixaRepositoryMapper.INSTANCE.toCaixaDomain(
                 List.of(sorteiosJpaRepository.save(entity))
         );
+    }
+
+    @Override
+    public MinhaApostaDomain recuperarApostasCaixa(final TipoLoteriaDomain tipoLoteriaDomain, final UUID uuid) {
+        if(Objects.isNull(uuid)){
+            var apostasEntity = apostasJpaRepository.findAllByTipoJogoOrderByInicioAsc(tipoLoteriaDomain.getDescricao());
+            return CaixaRepositoryMapper.INSTANCE.toMinhasApostasDomain(apostasEntity);
+        }
+        var apostasEntity = apostasJpaRepository.findByUuidAndTipoJogo(uuid, tipoLoteriaDomain.getDescricao());
+        return CaixaRepositoryMapper.INSTANCE.toMinhasApostasDomain(apostasEntity);
     }
 
 }

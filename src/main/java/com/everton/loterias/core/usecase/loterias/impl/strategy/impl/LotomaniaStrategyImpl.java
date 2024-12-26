@@ -51,6 +51,11 @@ public class LotomaniaStrategyImpl implements LoteriaStrategy {
         return this.salvarCaixaSorteios(ultimoSorteioCaixaWeb, ultimoSorteioCaixaDb, timerMillis, qtdeRegistros);
     }
 
+    @Override
+    public MinhaApostaDomain recuperarMinnasApostasCaixa(final TipoLoteriaDomain tipoJogo, UUID uuid) {
+        return loteriaGateway.recuperarApostasCaixa(tipoJogo, uuid);
+    }
+
     private void validarTamanhoLista(List<Integer> numeros){
         if(Objects.isNull(numeros) || numeros.isEmpty() || numeros.size() < 20){
             throw new RuntimeException("Quantidade minima de numeros deve ser 20");

@@ -1,7 +1,10 @@
 package com.everton.loterias.dataprovider.database.mapper;
 
+import com.everton.loterias.core.domain.ApostaDomain;
 import com.everton.loterias.core.domain.CaixaDomain;
+import com.everton.loterias.core.domain.MinhaApostaDomain;
 import com.everton.loterias.core.domain.ResultadoDomain;
+import com.everton.loterias.dataprovider.database.entity.ApostaEntity;
 import com.everton.loterias.dataprovider.database.entity.CaixaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,7 +27,6 @@ public interface CaixaRepositoryMapper {
     @Mapping(source = "resultadoDomain.nomeMunicipioUFSorteio", target = "municipio")
     CaixaEntity toCaixaEntity(final ResultadoDomain resultadoDomain);
 
-    @Named("toCaixaDomain")
     default CaixaDomain toCaixaDomain(final List<CaixaEntity> caixaEntities){
         var resultados = caixaEntities.stream()
                 .map(entidade -> ResultadoDomain.builder()
@@ -50,6 +52,29 @@ public interface CaixaRepositoryMapper {
         return dezenas.stream()
                 .map(String::valueOf) // Converte cada Integer para String
                 .collect(Collectors.joining(","));
+    }
+
+    default MinhaApostaDomain toMinhasApostasDomain(final List<ApostaEntity> apostasEntity){
+        var domains =  apostasEntity.stream()
+                .map(apostaEntity -> ApostaDomain.builder()
+                        .id(apostaEntity.getId())
+                        .uuid(apostaEntity.getUuid())
+                        .tipoJogo(apostaEntity.getTipoJogo())
+                        .numeros(this.stringDezenasToList(apostaEntity.getNumeros()))
+                        .inicio(apostaEntity.getInicio())
+                        .ativo(apostaEntity.isAtivo())
+                        .build())
+                .toList();
+        return MinhaApostaDomain.builder()
+                .apostasDomain(domains)
+                .build();
+    }
+
+    @Named("stringToList")
+    default List<Integer> stringDezenasToList(final String dezenas){
+        return Arrays.stream(dezenas.split(","))
+                .map(Integer::parseInt) // Converte cada elemento para Integer
+                .collect(Collectors.toList()); // Coleta como uma lista
     }
 
 }

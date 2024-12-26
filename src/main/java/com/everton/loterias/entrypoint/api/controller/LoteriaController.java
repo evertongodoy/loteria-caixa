@@ -1,5 +1,6 @@
 package com.everton.loterias.entrypoint.api.controller;
 
+import com.everton.loterias.core.domain.MinhaApostaDomain;
 import com.everton.loterias.core.usecase.loterias.LoteriaUsecase;
 import com.everton.loterias.entrypoint.api.controller.request.SalvarApostaRequest;
 import com.everton.loterias.entrypoint.api.controller.response.*;
@@ -55,12 +56,12 @@ public class LoteriaController {
     }
 
     @GetMapping("/consultar-minhas-apostas/{jogo}")
-    public ResponseEntity<String> consultarMinhasApostas(
+    public ResponseEntity<MinhaApostaResponse> consultarMinhasApostas(
             @PathVariable(value = "jogo") final String tipoJogo,
             @RequestParam(value = "uuid", required = false) final UUID uuid
     ){
-
-        return ResponseEntity.ok().body("AAAAAAA");
+        var minhasApostaDomain = loteriaUsecase.recuperarMinhasApostas(tipoJogo, uuid);
+        return ResponseEntity.ok().body(ApostaMapper.INSTANCE.toResponse(minhasApostaDomain));
     }
 
 

@@ -41,6 +41,12 @@ public class LoteriaUsecaseImpl implements LoteriaUsecase {
         return loteriaStrategyFactory.getStrategy(tipoJogo).atualizarDataBaseCaixaSorteio(timerMillis, qtdeRegistros);
     }
 
+    @Override
+    public MinhaApostaDomain recuperarMinhasApostas(final String tipoLoteria, final UUID uuid) {
+        var tipoJogo = TipoLoteriaDomain.fromDescricao(tipoLoteria.toUpperCase());
+        return loteriaStrategyFactory.getStrategy(tipoJogo).recuperarMinnasApostasCaixa(tipoJogo, uuid);
+    }
+
     private ApostaDomain construirLoteriaDomain(final String tipoLoteria,
                                                       final List<Integer> numeros,
                                                       final boolean isAtivo){

@@ -47,14 +47,17 @@ public interface ApostaMapper {
         var apostasCheckedasResponse = checkApostasDomain.getApostasCheckadas().stream()
                 .map(apostaChecada -> ApostaCheckedResponse.builder()
                         .numeroSorteio(apostaChecada.getNumeroSorteio())
+                        .dataSorteio(apostaChecada.getDataSorteio())
                         .totalAcertos(apostaChecada.getNumerosCorretos().size())
                         .numerosCorretos(apostaChecada.getNumerosCorretos())
                         .tipoJogo(apostaChecada.getTipoJogo().getDescricao())
                         .build())
-                .sorted(Comparator.comparingInt(ApostaCheckedResponse::getTotalAcertos).reversed())
+//                .sorted(Comparator.comparingInt(ApostaCheckedResponse::getTotalAcertos).reversed())
+                .sorted(Comparator.comparing(ApostaCheckedResponse::getDataSorteio).reversed())
                 .toList();
         return CheckApostasResponse.builder()
                 .totalJogosComAcerto(apostasCheckedasResponse.size())
+                .maioresAcertos(checkApostasDomain.getMaioresAcertos())
                 .apostasCheckadas(apostasCheckedasResponse)
                 .build();
     }

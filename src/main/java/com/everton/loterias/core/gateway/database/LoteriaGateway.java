@@ -10,5 +10,6 @@ public interface LoteriaGateway {
     CaixaDomain recuperarSorteio(final TipoLoteriaDomain tipoLoteriaDomain, final Integer numeroSorteio);
     CaixaDomain salvarSorteio(final ResultadoDomain resultadoDomain);
     MinhaApostaDomain recuperarApostasCaixa(final TipoLoteriaDomain tipoLoteriaDomain, final UUID uuid);
+    void deletarAposta(final UUID uuid);
 
 }

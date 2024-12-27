@@ -1,6 +1,7 @@
 package com.everton.loterias.core.usecase.loterias.impl;
 
 import com.everton.loterias.core.domain.*;
+import com.everton.loterias.core.gateway.database.LoteriaGateway;
 import com.everton.loterias.core.usecase.loterias.LoteriaUsecase;
 import com.everton.loterias.core.usecase.loterias.impl.strategy.LoteriaStrategyFactory;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoteriaUsecaseImpl implements LoteriaUsecase {
 
+    private final LoteriaGateway loteriaGateway;
     private final LoteriaStrategyFactory loteriaStrategyFactory;
 
     public MinhaApostaDomain salvarMinhaAposta(final String tipoLoteria,
@@ -51,6 +53,11 @@ public class LoteriaUsecaseImpl implements LoteriaUsecase {
     public CheckApostasDomain validarAposta(final String tipoLoteria, final UUID uuid, final List<Integer> apostaSimulada) {
         var tipoJogo = TipoLoteriaDomain.fromDescricao(tipoLoteria.toUpperCase());
         return loteriaStrategyFactory.getStrategy(tipoJogo).checarApostaVencedora(uuid, apostaSimulada);
+    }
+
+    @Override
+    public void deletarAposta(final UUID uuid) {
+        loteriaGateway.deletarAposta(uuid);
     }
 
     private ApostaDomain construirLoteriaDomain(final String tipoLoteria,

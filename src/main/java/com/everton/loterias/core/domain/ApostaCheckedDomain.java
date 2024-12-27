@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -14,6 +15,7 @@ import java.util.List;
 public class ApostaCheckedDomain {
 
     private Integer numeroSorteio;
+    private LocalDate dataSorteio;
     private Integer totalAcertos;
     private List<Integer> numerosCorretos;
     private TipoLoteriaDomain tipoJogo;

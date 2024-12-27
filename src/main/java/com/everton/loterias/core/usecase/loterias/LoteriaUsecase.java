@@ -18,5 +18,6 @@ public interface LoteriaUsecase {
     MinhaApostaDomain recuperarMinhasApostas(final String tipoLoteria, final UUID uuid);
 
     CheckApostasDomain validarAposta(final String tipoLoteria, final UUID uuid, final List<Integer> apostaSimulada);
+    void deletarAposta(final UUID uuid);
 
 }

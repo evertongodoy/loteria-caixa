@@ -59,4 +59,9 @@ public class LoteriaGatewayImpl implements LoteriaGateway {
         return CaixaRepositoryMapper.INSTANCE.toMinhasApostasDomain(apostasEntity);
     }
 
+    @Override
+    public void deletarAposta(final UUID uuid) {
+        apostasJpaRepository.deleteByUuid(uuid);
+    }
+
 }

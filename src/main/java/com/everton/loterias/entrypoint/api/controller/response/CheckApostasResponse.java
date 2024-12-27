@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +15,7 @@ import java.util.List;
 public class CheckApostasResponse {
 
     private Integer totalJogosComAcerto;
+    private Map<Integer, Long> maioresAcertos;
     private List<ApostaCheckedResponse> apostasCheckadas;
 
 }

@@ -7,10 +7,8 @@ import com.everton.loterias.core.usecase.loterias.impl.strategy.LoteriaStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -80,6 +78,7 @@ public class LotofacilStrategyImpl implements LoteriaStrategy {
             if(numerosCoincidentes.size() >= 11){
                 var apostaChecada = ApostaCheckedDomain.builder()
                         .numeroSorteio(resultado.getNumeroSorteio())
+                        .dataSorteio(resultado.getDataApuracao())
                         .totalAcertos(numerosCoincidentes.size())
                         .numerosCorretos(numerosCoincidentes)
                         .tipoJogo(TIPO_LOTERIA)
@@ -89,6 +88,7 @@ public class LotofacilStrategyImpl implements LoteriaStrategy {
         });
         return CheckApostasDomain.builder()
                 .totalJogosComAcerto(apostasChecadas.size())
+                .maioresAcertos(montarMaioresAcertos(apostasChecadas))
                 .apostasCheckadas(apostasChecadas)
                 .build();
     }

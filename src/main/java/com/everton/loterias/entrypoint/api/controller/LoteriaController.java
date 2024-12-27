@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("loterias")
@@ -87,5 +86,10 @@ public class LoteriaController {
         );
     }
 
+    @DeleteMapping("/deletar-aposta/{uuid}")
+    public ResponseEntity<Void> excluirAposta(@PathVariable(value = "uuid") final UUID uuid){
+        loteriaUsecase.deletarAposta(uuid);
+        return ResponseEntity.noContent().build();
+    }
 
 }

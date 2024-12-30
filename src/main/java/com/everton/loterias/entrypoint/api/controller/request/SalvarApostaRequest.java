@@ -1,6 +1,5 @@
 package com.everton.loterias.entrypoint.api.controller.request;
 
-import com.everton.loterias.entrypoint.api.dto.TipoLoteria;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -15,6 +14,6 @@ public class SalvarApostaRequest {
 
     private String tipoLoteria;
     private Set<Integer> numerosAposta;
-    private boolean isAtivo;
+    private boolean ativo;
 
 }

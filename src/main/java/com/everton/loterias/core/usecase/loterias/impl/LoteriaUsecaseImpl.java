@@ -20,9 +20,9 @@ public class LoteriaUsecaseImpl implements LoteriaUsecase {
 
     public MinhaApostaDomain salvarMinhaAposta(final String tipoLoteria,
                                                final List<Integer> numeros,
-                                               final boolean isAtivo){
+                                               final boolean ativo){
         return loteriaStrategyFactory.getStrategy(TipoLoteriaDomain.fromDescricao(tipoLoteria.toUpperCase()))
-                .salvarAposta(this.construirLoteriaDomain(tipoLoteria, numeros, isAtivo));
+                .salvarAposta(this.construirLoteriaDomain(tipoLoteria, numeros, ativo));
     }
 
     @Override

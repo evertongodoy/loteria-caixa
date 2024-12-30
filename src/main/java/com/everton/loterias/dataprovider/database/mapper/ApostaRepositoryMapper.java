@@ -19,6 +19,7 @@ public interface ApostaRepositoryMapper {
     ApostaEntity toEntity(ApostaDomain domain);
 
     @Mapping(source = "entity.numeros", target = "numeros", qualifiedByName = "stringToList")
+    @Mapping(source = "entity.ativo", target = "ativo")
     ApostaDomain toDomain(ApostaEntity entity);
 
     @Named("listToString")

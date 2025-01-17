@@ -21,6 +21,7 @@ EXPOSE 8080
 CMD ["java", "-jar", "target/loteria-caixa-0.0.1-SNAPSHOT.jar"]
 
 
+
 #
 # # Etapa 1: Build
 #

@@ -5,6 +5,7 @@ import com.everton.loterias.entrypoint.api.controller.request.SalvarApostaReques
 import com.everton.loterias.entrypoint.api.controller.response.*;
 import com.everton.loterias.entrypoint.api.mapper.ApostaMapper;
 import com.everton.loterias.entrypoint.api.mapper.CaixaResponseMapper;
+import com.everton.loterias.entrypoint.api.mapper.MaisSorteadosMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.RequiredArgsConstructor;
@@ -90,6 +91,12 @@ public class LoteriaController {
     public ResponseEntity<Void> excluirAposta(@PathVariable(value = "uuid") final UUID uuid){
         loteriaUsecase.deletarAposta(uuid);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/consultar-mais-sorteados/jogo/{jogo}")
+    public ResponseEntity<MaisSorteadosResponse> consultarMaisSorteados(@PathVariable(value = "jogo") final String tipoLoteria){
+        return ResponseEntity.ok().body(MaisSorteadosMapper.INSTANCE.toMaisSorteadosResponse(
+                loteriaUsecase.recuperarMaisSorteados(tipoLoteria, null)));
     }
 
 }

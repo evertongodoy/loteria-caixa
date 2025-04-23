@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="content">
+    <h3 th:text="'Sorteios atualizados para: ' + ${jogo}"></h3>
+    <ul> <!-- class="list-group" id="sorteios-list" -->
+        <li th:each="sorteio : ${response.sorteiosCaixa}" th:text="${sorteio}"></li> <!--  class="list-group-item" -->
+    </ul>
+
+</div>
+</body>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+<!--    <link rel="stylesheet" th:href="@{/css/styles.css}"/>-->
+</head>
+<body>
+<header th:fragment="header">
+<!--    <nav class="navbar">-->
+<!--        <ul>-->
+<!--            <li><a th:href="@{/}">Home</a></li>-->
+<!--            <li><a th:href="@{/page1}">Página 1</a></li>-->
+<!--            <li><a th:href="@{/page2}">Página 2</a></li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Loterias Home</a>
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" aria-current="page" href="/">Home</a>-->
+<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/selecao-loteria">Loteria</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="/meus-jogos" aria-disabled="true">Meus Jogos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>

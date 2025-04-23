@@ -29,7 +29,15 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
 
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+    cache: false
+
   flyway:
     enabled: true
     clean-disabled: true # true = Evita que o banco seja limpo acidentalmente
     locations: classpath:db/migration
+

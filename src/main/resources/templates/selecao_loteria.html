@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<div th:fragment="content">
+
+    <div class="container mt-5">
+        <h1 class="text-center">Loteria</h1>
+        <form action="#" method="post" class="mt-4">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="tipoLoteria" class="form-label">Tipo de Loteria</label>
+                    <select id="tipoLoteria" name="tipoLoteria" class="form-select" required onchange="toggleAcaoDesejada()">
+                        <option value="" disabled selected>Selecione o tipo de loteria</option>
+                        <option value="LOTOFACIL">Lotofacil</option>
+                        <option value="LOTOMANIA">Lotomania</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="acaoDesejada" class="form-label">Ação Desejada</label>
+                    <select id="acaoDesejada" name="acaoDesejada" class="form-select" required disabled
+                            onchange="redirecionarParaAtualizacao(this)">
+                        <option value="" disabled selected>Selecione a ação desejada</option>
+                        <option value="MAIS_SORTEADOS">Mais Sorteados</option>
+                        <option value="APOSTA_SIMULADA">Aposta Simulada</option>
+                        <option value="ATUALIZAR_BASE">Atualizar Base de Dados</option>
+                    </select>
+                </div>
+            </div>
+<!--            <div class="text-center">-->
+<!--                <button type="submit" class="btn btn-primary">Enviar</button>-->
+<!--            </div>-->
+        </form>
+    </div>
+
+</div>
+
+
+
+</body>
+
+
+</html>

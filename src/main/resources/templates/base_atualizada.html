@@ -3,10 +3,23 @@
 
 <body>
 <div th:fragment="content">
-    <h3 th:text="'Sorteios atualizados para: ' + ${jogo}"></h3>
-    <ul> <!-- class="list-group" id="sorteios-list" -->
-        <li th:each="sorteio : ${response.sorteiosCaixa}" th:text="${sorteio}"></li> <!--  class="list-group-item" -->
-    </ul>
-
+    <div class="container table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">sorteio</th>
+                <th scope="col">loteria</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="sorteio, iterStat : ${response.sorteiosCaixa}">
+                <th scope="row" th:text="${iterStat.index + 1}"></th>
+                <td th:text="${sorteio}"></td>
+                <td th:text="${jogo}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>

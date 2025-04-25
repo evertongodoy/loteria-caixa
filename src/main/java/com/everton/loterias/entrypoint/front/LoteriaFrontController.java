@@ -87,7 +87,7 @@ public class LoteriaFrontController {
             @PathVariable(value = "jogo") final String tipoJogo){
         model.addAttribute("template", "aposta_simulada");
         model.addAttribute("fragment", "content");
-        model.addAttribute("jogo", tipoJogo);
+        model.addAttribute("jogo", tipoJogo.toLowerCase());
         var numerosDisponiveis = loteriaFrontUsecase.numerosDisponiveis(tipoJogo);
         model.addAttribute("numeros_disponiveis", numerosDisponiveis);
         return "layout";

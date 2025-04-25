@@ -3,10 +3,27 @@
 
 <body>
 <div th:fragment="content">
-    <h2 th:text="'Aposta simulada para: ' + ${jogo}"></h2>
-    <ul> <!-- class="list-group" id="sorteios-list" -->
-        <li th:each="numero : ${numeros_disponiveis}" th:text="${numero}"></li> <!--  class="list-group-item" -->
-    </ul>
+    <div class="container tela-dividida">
+        <!-- Left side: Selected balls -->
+        <div class="lado-esquerdo">
+            <h3 th:text="${jogo} + ' selecionar números'"></h3>
+            <div class="tabela-numeros">
+                <div th:each="numero : ${numeros_disponiveis}"
+                     class="bola"
+                     th:text="${numero}"
+                     th:attr="data-numero=${numero}">
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side: Input and button -->
+        <div class="lado-direito">
+            <h3>selecionados (<span id="quantidadeSelecionados">0</span>)</h3>
+            <input type="text" id="numerosSelecionados" readonly placeholder="Números selecionados aparecerão aqui">
+            <button type="button" class="btn btn-primary mt-3">Enviar</button>
+        </div>
+    </div>
+
 
 
 </div>

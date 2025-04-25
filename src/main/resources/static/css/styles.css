@@ -41,7 +41,69 @@ body {
     color: white;
     text-align: center;
     padding: 10px;
-    position: fixed;
-    bottom: 0;
+    bottom: 10;
     width: 100%;
+}
+
+
+
+
+
+
+.tela-dividida {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.lado-esquerdo, .lado-direito {
+    flex: 1 1 45%; /* Adjusts to 45% width and wraps on smaller screens */
+    max-width: 45%;
+    min-width: 300px;
+}
+
+.lado-esquerdo h3, .lado-direito h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.tabela-numeros {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Adjust columns as needed */
+    gap: 10px;
+    justify-content: center;
+}
+
+.bola {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.bola.selecionada {
+    background-color: #ff9900;
+    color: white;
+}
+
+#numerosSelecionados {
+    width: 100%;
+    height: 50px;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
 }

@@ -83,13 +83,13 @@ public class LoteriaFrontController {
 
     @GetMapping("/aposta-simulada/{jogo}")
     public String apostaSimulada(
-            Model model,
-            @PathVariable(value = "jogo") final String tipoJogo){
+            @PathVariable(value = "jogo") final String tipoJogo,
+            Model model){
         model.addAttribute("template", "aposta_simulada");
         model.addAttribute("fragment", "content");
         model.addAttribute("jogo", tipoJogo.toLowerCase());
-        var numerosDisponiveis = loteriaFrontUsecase.numerosDisponiveis(tipoJogo);
-        model.addAttribute("numeros_disponiveis", numerosDisponiveis);
+        model.addAttribute("numeros_disponiveis", loteriaFrontUsecase.numerosDisponiveis(tipoJogo));
+        model.addAttribute("minimo", loteriaFrontUsecase.quantidadeMinimaNumerosJogo(tipoJogo));
         return "layout";
     }
 
@@ -102,6 +102,29 @@ public class LoteriaFrontController {
         model.addAttribute("jogo", tipoJogo);
         MaisSorteadosDomain sorteadosDomain = loteriaUsecase.recuperarMaisSorteados(tipoJogo, null);
         model.addAttribute("sorteados", sorteadosDomain);
+        return "layout";
+    }
+
+    @GetMapping("/validar-aposta/{jogo}")
+    public String validarAposta(@PathVariable("jogo") String jogo,
+                                @RequestParam("numeros") String numeros,
+                                Model model) {
+        var numerosSelecionados = loteriaFrontUsecase.convertNumerosSelecionados(numeros);
+//        String jogo = (String) request.get("jogo");
+//        List<Integer> numeros = (List<Integer>) request.get("numeros");
+
+//        boolean isValid = !numeros.isEmpty(); // Example validation
+//        String mensagem = isValid ? "Aposta válida para o jogo " + jogo + "!" : "Aposta inválida.";
+
+        model.addAttribute("jogo", jogo);
+//        model.addAttribute("numeros", numeros);
+        model.addAttribute("template", "result_aposta_simulada");
+        model.addAttribute("fragment", "content");
+
+
+//        Map.of("mensagem", mensagem);
+//        return "aposta_simulada_result :: content";
+//        return "result_aposta_simulada :: content";
         return "layout";
     }
 

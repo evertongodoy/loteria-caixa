@@ -18,9 +18,13 @@
 
         <!-- Right side: Input and button -->
         <div class="lado-direito">
-            <h3>selecionados (<span id="quantidadeSelecionados">0</span>)</h3>
-            <input type="text" id="numerosSelecionados" readonly placeholder="Números selecionados aparecerão aqui">
-            <button type="button" class="btn btn-primary mt-3">Enviar</button>
+            <form th:action="@{/validar-aposta/{jogo}(jogo=${jogo})}" method="get">
+<!--                <h3>selecionados (<span id="quantidadeSelecionados">0</span>)</h3>-->
+                <h3>selecionados (<span id="quantidadeSelecionados">0</span>) - minimo (<span id="minimo" th:text="${minimo}"></span>)</h3>
+                <input type="hidden" name="jogo" th:value="${jogo}">
+                <input type="text" id="numerosSelecionados" name="numeros" readonly placeholder="Selecionar numeros">
+                <button type="submit" class="btn btn-primary mt-3">Enviar</button>
+            </form>
         </div>
     </div>
 
